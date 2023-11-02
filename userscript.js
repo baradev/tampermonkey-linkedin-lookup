@@ -76,27 +76,6 @@ var $ = window.jQuery;
 `;
     }
 
-    function get_email_search_icon_link2(name) {
-      return `
-            <span class="email_search_icon" name="${name}">
-
-  <svg
-    focusable="false"
-    height="1em"
-    viewBox="0 0 24 24"
-    width="1em"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5
-4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
-    ></path>
-    <path d="M0 0h24v24H0z" fill="none"></path>
-  </svg>
-</span>
-`;
-    }
-
     function insert_email_search_icon() {
       $(".gD")
         .not(".email_search_icon+.gD")
@@ -109,21 +88,8 @@ var $ = window.jQuery;
         });
     }
 
-    function insert_email_search_icon2() {
-      $(".gD")
-        .not(".email_search_icon+.gD")
-        .each(function (index) {
-          const emailSearchIconLink2 = get_email_search_icon_link2(
-            $(this).attr("name")
-          );
-
-          $(this).before(emailSearchIconLink2);
-        });
-    }
-
     // Poll periodically for newly created divs
     setInterval(insert_email_search_icon, 300);
-    setInterval(insert_email_search_icon2, 300);
 
     $("body").on("click", ".email_search_icon", function () {
       var urlToOpen =
