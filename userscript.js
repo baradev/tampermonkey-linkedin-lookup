@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         LinkedIn Lookup in Gmail
-// @namespace    http://barbora.cloud/
+// @namespace    http://tampermonkey.net
 // @version      0.1
 // @description  Search LinkedIn by recipient's full name or email address
 // @author       Barbora Klusackova
