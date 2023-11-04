@@ -89,13 +89,7 @@ var $ = window.jQuery;
         "https://www.linkedin.com/search/results/all/?keywords=" +
         $(this).attr("urlParameter");
       var win = window.open(urlToOpen, "_blank");
-      if (win) {
-        //Browser has allowed it to be opened
-        win.focus();
-      } else {
-        //Browser has blocked it
-        alert("Please allow popups for this website");
-      }
+      win.focus();
     });
   });
 })();
