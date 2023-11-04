@@ -23,21 +23,17 @@ var $ = window.jQuery;
   $(function () {
     const css = `
 <style>
-  .email_search_icon {
+  .search_icon {
     outline: none;
     position: relative;
     z-index: 0;
-    padding: 0 4px;
     margin: 0;
     top: 2px;
   }
-  .email_search_icon svg {
-    fill: yellow;
-  }
-  .email_search_icon svg:hover {
+  .search_icon svg:hover {
     fill: orange;
   }
-  .email_search_icon {
+  .search_icon {
     cursor: pointer;
   }
 </style>
@@ -45,56 +41,52 @@ var $ = window.jQuery;
 
     $("body").prepend(css);
 
-    function getEmails() {
-      var search_in = document.body.innerHTML;
-      var string_context = search_in.toString();
-
-      var array_mails = string_context.match(
-        /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi
-      );
-      return array_mails;
-    }
-
-    function get_email_search_icon_link(email) {
+    function createSearchIconElementAt(urlParameter, color) {
       return `
-            <span class="email_search_icon" email="${email}">
-            
-  <svg
-    focusable="false"
-    height="1em"
-    viewBox="0 0 24 24"
-    width="1em"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5
-4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
-    ></path>
-    <path d="M0 0h24v24H0z" fill="none"></path>
-  </svg>
+            <span class="search_icon" urlParameter="${urlParameter}">
+            <svg
+            fill="${color}"
+            xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 64C150 64 64 150 64 256s86 192 192 192c17.7 0 32 14.3 32 32s-14.3 32-32 32C114.6 512 0 397.4 0 256S114.6 0 256 0S512 114.6 512 256v32c0 53-43 96-96 96c-29.3 0-55.6-13.2-73.2-33.9C320 371.1 289.5 384 256 384c-70.7 0-128-57.3-128-128s57.3-128 128-128c27.9 0 53.7 8.9 74.7 24.1c5.7-5 13.1-8.1 21.3-8.1c17.7 0 32 14.3 32 32v80 32c0 17.7 14.3 32 32 32s32-14.3 32-32V256c0-106-86-192-192-192zm64 192a64 64 0 1 0 -128 0 64 64 0 1 0 128 0z"/></svg>
 </span>
 `;
     }
 
-    function insert_email_search_icon() {
+    function createSearchIconElementPerson(urlParameter, color) {
+      return `
+            <span class="search_icon" urlParameter="${urlParameter}">
+            <svg
+            fill="${color}"
+            xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M112 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm40 304V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V256.9L59.4 304.5c-9.1 15.1-28.8 20-43.9 10.9s-20-28.8-10.9-43.9l58.3-97c17.4-28.9 48.6-46.6 82.3-46.6h29.7c33.7 0 64.9 17.7 82.3 46.6l58.3 97c9.1 15.1 4.2 34.8-10.9 43.9s-34.8 4.2-43.9-10.9L232 256.9V480c0 17.7-14.3 32-32 32s-32-14.3-32-32V352H152z"/></svg>
+
+            </span>
+`;
+    }
+
+    function addSearchIconBeforeGD() {
       $(".gD")
-        .not(".email_search_icon+.gD")
+        .not(".search_icon+.gD")
         .each(function (index) {
-          const emailSearchIconLink = get_email_search_icon_link(
-            $(this).attr("email")
+          const searchIconEmail = createSearchIconElementAt(
+            $(this).attr("email"),
+            "blue"
+          );
+          const searchIconName = createSearchIconElementPerson(
+            $(this).attr("name"),
+            "blue"
           );
 
-          $(this).before(emailSearchIconLink);
+          $(this).before(searchIconEmail);
+          $(this).before(searchIconName);
         });
     }
 
     // Poll periodically for newly created divs
-    setInterval(insert_email_search_icon, 300);
+    setInterval(addSearchIconBeforeGD, 300);
 
-    $("body").on("click", ".email_search_icon", function () {
+    $("body").on("click", ".search_icon", function () {
       var urlToOpen =
         "https://www.linkedin.com/search/results/all/?keywords=" +
-        $(this).attr("email");
+        $(this).attr("urlParameter");
       var win = window.open(urlToOpen, "_blank");
       if (win) {
         //Browser has allowed it to be opened
