@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         LinkedIn Lookup in Gmail
 // @namespace    http://tampermonkey.net
-// @version      0.2
+// @version      0.3
 // @description  Search LinkedIn by recipient's full name or email address
 // @author       Barbora Klusackova
 // @match        *://mail.google.com/*
@@ -79,8 +79,19 @@ var $ = window.jQuery;
           $(this).before(searchIconEmail);
           $(this).before(searchIconName);
         });
-    }
 
+      $('a[href^="mailto:"]')
+        .not('.search_icon+a[href^="mailto:"]')
+        .not('div[contenteditable="true"] a[href^="mailto:"]')
+        .each(function (index) {
+          const searchIconEmail = createSearchIconElementAt(
+            $(this).attr("href").replace("mailto:", ""),
+            "blue"
+          );
+          // console.log("Found email for possible searching: " + email_address);
+          $(this).before(searchIconEmail);
+        });
+    }
     // Poll periodically for newly created divs
     setInterval(addSearchIconBeforeGD, 300);
 
