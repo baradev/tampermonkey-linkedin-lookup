@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         LinkedIn Lookup in Gmail
 // @namespace    http://tampermonkey.net
-// @version      0.4
+// @version      0.5
 // @description  Search LinkedIn by recipient's full name or email address
 // @author       Barbora Klusackova
 // @match        *://mail.google.com/*
@@ -122,9 +122,9 @@ function prependIconsToOtherEmails() {
 }
 
 function prependLinkedInIconsToEmails() {
-  prependIconsToSender()
-  prependIconsToRecipients()
-  prependIconsToOtherEmails()
+  prependIconsToSender();
+  prependIconsToRecipients();
+  prependIconsToOtherEmails();
 }
 
 (function () {
