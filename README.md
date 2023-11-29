@@ -8,7 +8,7 @@ Open the following [script](https://github.com/kbarushkaa/tampermonkey-linkedin-
 
 ## Usage
 
-Open an email in gmail, you can see two icons next to the recipient's name.
+Open an email in Gmail, you can see two icons next to the recipient's name.
 
 - @ icon - searches LinekdIn by recipient's email
 - user icon - searches LinkedIn by recipient's name
@@ -19,7 +19,7 @@ Open an email in gmail, you can see two icons next to the recipient's name.
 
 1. **Adding icons to sender**  
    The icons are added to the email's sender.
-2. **Adding icons to email's recipients**  
-   The icons are added to the email recipients. If a recipient does not have a name, only email icon is added.
-3. **Adding email icon to the emails in body**  
-   Only email icon is added to the email addresses in the body of an email.
+2. **Adding icons to email recipients**  
+   The icons are added to the email recipients. Only an email icon is added if a recipient does not have a name.
+3. **Adding email icon to the emails in the body**  
+   Only an email icon is added to the email addresses in the body of an email.
