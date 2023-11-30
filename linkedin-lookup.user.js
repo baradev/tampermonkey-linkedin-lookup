@@ -58,6 +58,12 @@ function prependIconsToSender() {
   $(".gD")
     .not(".search_icon+.gD")
     .each(function (index) {
+      const personName1 = $(this).text().trim();
+      // Check if personName contains special characters, numbers, or is a single word
+      if (/[^a-zA-Z\s]/.test(personName1) || !/\s/.test(personName1)) {
+        // Skip processing if special characters or numbers are found, or it's a single word
+        return;
+      }
       const searchIconName = createSearchIconElementPerson(
         $(this).attr("name"),
         "blue"
@@ -73,15 +79,19 @@ function prependIconsToRecipients() {
     .not(".search_icon+span[email]")
     .each(function (index) {
       // add name icon
-      const nameArray = $(this).prop("innerText").split("<");
-      const foundNameInInnerText = nameArray.length > 1;
-      if (foundNameInInnerText) {
-        const searchIconName = createSearchIconElementPerson(
-          nameArray[0].trim(),
-          "blue"
-        );
-        $(this).before(searchIconName);
+      const innerText = $(this).prop("innerText").trim();
+
+      // Extract the part before the '<' symbol
+      const namePart = innerText.split("<")[0].trim();
+
+      // Check if namePart is a single word or contains special characters or numbers
+      if (!/\s/.test(namePart) || /[^a-zA-Z\s]/.test(namePart)) {
+        // Skip processing if it's a single word or contains special characters or numbers
+        return;
       }
+
+      const searchIconName = createSearchIconElementPerson(namePart, "blue");
+      $(this).before(searchIconName);
     });
 }
 
@@ -89,10 +99,15 @@ function prependIconsToInCard() {
   $('[jsname="BXecsc"]')
     .not('.search_icon+[jsname="BXecsc"]')
     .each(function (index) {
-      const personName = $(this).text(); // Get the text content of the span
+      const personName = $(this).text().trim();
+
+      // Check if personName contains special characters, numbers, or is a single word
+      if (/[^a-zA-Z\s]/.test(personName) || !/\s/.test(personName)) {
+        // Skip processing if special characters or numbers are found, or it's a single word
+        return;
+      }
 
       const searchIconName = createSearchIconElementPerson(personName, "blue");
-
       $(this).before(searchIconName);
     });
 }
