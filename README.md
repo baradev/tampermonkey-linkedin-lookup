@@ -14,7 +14,9 @@ When hovering over a name within the Gmail interface, a contact card will pop up
 
 User icon - searches LinkedIn by recipient's name.
 
-![Usage example](/Users/barbora/Projects/chrome-extesion-tim/pop-up card with User Icon.png)
+![Usage example](image1.png)
+![Usage example](image2.png)
+![Usage example](image3.png)
 
 ## Features
 
