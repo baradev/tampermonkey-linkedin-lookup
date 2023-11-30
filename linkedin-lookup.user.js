@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         LinkedIn Lookup in Gmail
 // @namespace    http://tampermonkey.net
-// @version      0.6
+// @version      0.6.1
 // @description  Search LinkedIn by recipient's full name or email address
 // @author       Barbora Klusackova
 // @match        *://mail.google.com/*
@@ -60,7 +60,8 @@ function prependIconsToSender() {
     .each(function (index) {
       const personName1 = $(this).text().trim();
       // Check if personName contains special characters, numbers, or is a single word
-      if (/[^a-zA-Z\s]/.test(personName1) || !/\s/.test(personName1)) {
+
+      if (/[^a-zA-Z\s'-]/.test(personName1) || !/\s/.test(personName1)) {
         // Skip processing if special characters or numbers are found, or it's a single word
         return;
       }
@@ -85,7 +86,8 @@ function prependIconsToRecipients() {
       const namePart = innerText.split("<")[0].trim();
 
       // Check if namePart is a single word or contains special characters or numbers
-      if (!/\s/.test(namePart) || /[^a-zA-Z\s]/.test(namePart)) {
+
+      if (/[^a-zA-Z\s'-]/.test(namePart) || !/\s/.test(namePart)) {
         // Skip processing if it's a single word or contains special characters or numbers
         return;
       }
@@ -102,7 +104,8 @@ function prependIconsToInCard() {
       const personName = $(this).text().trim();
 
       // Check if personName contains special characters, numbers, or is a single word
-      if (/[^a-zA-Z\s]/.test(personName) || !/\s/.test(personName)) {
+
+      if (/[^a-zA-Z\s'-]/.test(personName) || !/\s/.test(personName)) {
         // Skip processing if special characters or numbers are found, or it's a single word
         return;
       }
