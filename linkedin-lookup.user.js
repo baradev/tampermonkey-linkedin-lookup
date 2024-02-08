@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         LinkedIn Lookup in Gmail
 // @namespace    http://tampermonkey.net
-// @version      0.6.2
+// @version      0.6.3
 // @description  Search LinkedIn by recipient's full name or email address
 // @author       Barbora Klusackova
 // @match        *://mail.google.com/*
@@ -84,6 +84,11 @@ function prependIconsToRecipients() {
 
       // Extract the part before the '<' symbol
       const namePart = innerText.split('<')[0].trim()
+
+      // Skip processing if the name part contains '@' or '&'
+      if (namePart.includes('@') || namePart.includes('&')) {
+        return
+      }
 
       // Clean the name
       const cleanName = cleanNameFunction(namePart)
