@@ -120,7 +120,7 @@ function cleanNameFunction(namePart) {
   return namePart.replace(/[^\w\s'-]/g, '').replace(/\s+/g, ' ')
 }
 
-function prependIconsToInCard() {
+/* function prependIconsToInCard() {
   $('[jsname="BXecsc"]')
     .not('.search_icon+[jsname="BXecsc"]')
     .each(function (index) {
@@ -136,13 +136,13 @@ function prependIconsToInCard() {
       const searchIconName = createSearchIconElementPerson(personName, 'blue')
       $(this).before(searchIconName)
     })
-}
+} */
 
 function prependLinkedInIconsToEmails() {
   console.log('Prepending...')
   prependIconsToSender()
   prependIconsToRecipients()
-  prependIconsToInCard()
+  /* prependIconsToInCard() */
 }
 
 ;(function () {
