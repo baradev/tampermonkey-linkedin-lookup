@@ -152,7 +152,6 @@ function findAndHighlightEmails() {
     })
 }
 
-// Function to handle right-click on the document
 function handleContextMenu(event) {
   // Check if the right-clicked element is a highlighted email address with a dot before '@'
   const target = $(event.target)
@@ -192,6 +191,7 @@ function handleContextMenu(event) {
       border: '1px solid #ccc',
       boxShadow: '2px 2px 5px rgba(0,0,0,0.2)',
       padding: '5px',
+      cursor: 'pointer', // Add cursor property here
     })
 
     // Append the menu to the body
