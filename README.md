@@ -14,7 +14,12 @@ User icon - searches LinkedIn by recipient's name.
 
 ![Usage example](img.png)
 
+![Usage example](context-menu.png)
+
 ## Features
 
 1. **Adding User icon to sender and recipient**  
    The icon is added to the email's sender and email's recipient(s).
+
+2. **Searching for first@lastName@gmail.com**  
+   When right-clicking, it displays a context menu with the option to search for a person on LinkedIn.
