@@ -152,6 +152,9 @@ function findAndHighlightEmails() {
     })
 }
 
+// Define menu outside of the function to ensure only one instance exists
+const menu = $('<menu>')
+
 function handleContextMenu(event) {
   // Check if the right-clicked element is a highlighted email address with a dot before '@'
   const target = $(event.target)
@@ -168,10 +171,11 @@ function handleContextMenu(event) {
       nameToSearch = parts[0]
     }
 
-    // Create the context menu
-    const menu = $('<menu>')
-    const menuItem = $('<menuitem>')
-    menuItem.text('Search on LinkedIn')
+    // Clear previous menu items
+    menu.empty()
+
+    // Create the context menu item
+    const menuItem = $('<menuitem>').text('Search on LinkedIn')
     menuItem.on('click', function () {
       // Open LinkedIn search with the modified name
       const urlToOpen =
@@ -194,11 +198,13 @@ function handleContextMenu(event) {
       cursor: 'pointer', // Add cursor property here
     })
 
-    // Append the menu to the body
-    $('body').append(menu)
+    // Append the menu to the body if it's not already appended
+    if (!menu.is(':visible')) {
+      $('body').append(menu)
+    }
 
     // Remove the menu when clicking outside of it
-    $(document).on('click', function () {
+    $(document).one('click', function () {
       menu.remove()
     })
 
