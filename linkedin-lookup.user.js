@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         LinkedIn Lookup in Gmail
 // @namespace    http://tampermonkey.net
-// @version      0.6.4
+// @version      0.6.5
 // @description  Search LinkedIn by recipient's full name or email address
 // @author       Barbora Klusackova
 // @match        *://mail.google.com/*
@@ -120,7 +120,6 @@ function cleanNameFunction(namePart) {
   // Remove special characters and extra spaces
   return namePart.replace(/[^\w\s'-]/g, '').replace(/\s+/g, ' ')
 }
-
 function findAndHighlightEmails() {
   // Regular expression to find email addresses with a dot before the @ sign
   const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g
@@ -139,10 +138,10 @@ function findAndHighlightEmails() {
           emailsFound.forEach((email) => {
             // Check if the email address contains a dot before the @ sign
             if (email.indexOf('.') < email.indexOf('@')) {
-              // Wrap the email address with a span and apply red color
+              // Wrap the email address with a span and apply purple color
               const emailHighlighted = text.replace(
                 email,
-                `<span style="color: red;">${email}</span>`
+                `<span style="color: purple;">${email}</span>`
               )
               $(this).html(emailHighlighted)
             }
@@ -152,13 +151,17 @@ function findAndHighlightEmails() {
     })
 }
 
+// Call the function to find and highlight emails
+findAndHighlightEmails()
+
 // Define menu outside of the function to ensure only one instance exists
 const menu = $('<menu>')
 
 function handleContextMenu(event) {
   // Check if the right-clicked element is a highlighted email address with a dot before '@'
   const target = $(event.target)
-  if (target.is('span') && target.css('color') === 'rgb(255, 0, 0)') {
+  if (target.is('span') && target.css('color') === 'rgb(128, 0, 128)') {
+    // Check for purple color
     const emailAddress = target.text()
     const parts = emailAddress.split('@')[0].split('.') // Split by dot and get parts before '@'
 
