@@ -48,7 +48,8 @@ function createSearchIconElementPerson(urlParameter, color) {
         <span class="search_icon" urlParameter="${urlParameter}" title="Search for ${urlParameter} on LinkedIn">
           <svg
             fill="${color}"
-            xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/>
+            xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+            <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/>
           </svg>
         </span>
 `
@@ -120,29 +121,100 @@ function cleanNameFunction(namePart) {
   return namePart.replace(/[^\w\s'-]/g, '').replace(/\s+/g, ' ')
 }
 
-/* function prependIconsToInCard() {
-  $('[jsname="BXecsc"]')
-    .not('.search_icon+[jsname="BXecsc"]')
-    .each(function (index) {
-      const personName = $(this).text().trim()
+function findAndHighlightEmails() {
+  // Regular expression to find email addresses with a dot before the @ sign
+  const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g
 
-      // Check if personName contains special characters, numbers, or is a single word
+  // Iterate through all elements in the body
+  $('body')
+    .find('*')
+    .each(function () {
+      // Check if the element contains text
+      if ($(this).children().length === 0) {
+        const text = $(this).text()
+        const emailsFound = text.match(emailRegex)
 
-      if (/[^a-zA-Z\s'-]/.test(personName) || !/\s/.test(personName)) {
-        // Skip processing if special characters or numbers are found, or it's a single word
-        return
+        if (emailsFound) {
+          // Iterate through found email addresses
+          emailsFound.forEach((email) => {
+            // Check if the email address contains a dot before the @ sign
+            if (email.indexOf('.') < email.indexOf('@')) {
+              // Wrap the email address with a span and apply red color
+              const emailHighlighted = text.replace(
+                email,
+                `<span style="color: red;">${email}</span>`
+              )
+              $(this).html(emailHighlighted)
+            }
+          })
+        }
       }
-
-      const searchIconName = createSearchIconElementPerson(personName, 'blue')
-      $(this).before(searchIconName)
     })
-} */
+}
+
+// Function to handle right-click on the document
+function handleContextMenu(event) {
+  // Check if the right-clicked element is a highlighted email address with a dot before '@'
+  const target = $(event.target)
+  if (target.is('span') && target.css('color') === 'rgb(255, 0, 0)') {
+    const emailAddress = target.text()
+    const parts = emailAddress.split('@')[0].split('.') // Split by dot and get parts before '@'
+
+    let nameToSearch
+    if (parts.length === 2) {
+      // If there are two parts (e.g., 'bob.smith'), construct the name
+      nameToSearch = parts[0] + ' ' + parts[1]
+    } else {
+      // If there's only one part (e.g., 'bob'), use it as the name
+      nameToSearch = parts[0]
+    }
+
+    // Create the context menu
+    const menu = $('<menu>')
+    const menuItem = $('<menuitem>')
+    menuItem.text('Search on LinkedIn')
+    menuItem.on('click', function () {
+      // Open LinkedIn search with the modified name
+      const urlToOpen =
+        'https://www.linkedin.com/search/results/all/?keywords=' +
+        encodeURIComponent(nameToSearch)
+      window.open(urlToOpen, '_blank')
+    })
+    menu.append(menuItem)
+
+    // Show the context menu at the mouse position
+    menu.css({
+      top: event.clientY,
+      left: event.clientX,
+      position: 'fixed',
+      zIndex: 1000,
+      background: 'white',
+      border: '1px solid #ccc',
+      boxShadow: '2px 2px 5px rgba(0,0,0,0.2)',
+      padding: '5px',
+    })
+
+    // Append the menu to the body
+    $('body').append(menu)
+
+    // Remove the menu when clicking outside of it
+    $(document).on('click', function () {
+      menu.remove()
+    })
+
+    // Prevent the default context menu
+    event.preventDefault()
+  }
+}
+
+// Attach the context menu event handler
+$(document).on('contextmenu', handleContextMenu)
 
 function prependLinkedInIconsToEmails() {
   console.log('Prepending...')
   prependIconsToSender()
   prependIconsToRecipients()
-  /* prependIconsToInCard() */
+  findAndHighlightEmails() // Call the new function to highlight emails in the body
 }
 
 ;(function () {
@@ -151,5 +223,6 @@ function prependLinkedInIconsToEmails() {
     $('body').prepend(css)
     setInterval(prependLinkedInIconsToEmails, 300)
     $('body').on('click', '.search_icon', openLinkedInUrl)
+    $(document).on('contextmenu', handleContextMenu) // Attach the context menu event handler
   })
 })()
