@@ -2,9 +2,9 @@
 
 To use this script you need the [Tampermonkey Extension](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo).
 
-## Installation
+## Installation / Update
 
-Open the following [script](https://github.com/kbarushkaa/tampermonkey-linkedin-lookup/raw/main/linkedin-lookup.user.js) and click select _Install_.
+Open the following [script](https://github.com/kbarushkaa/tampermonkey-linkedin-lookup/raw/main/linkedin-lookup.user.js) and click select _Install_ / _Reinstall_ .
 
 ## Usage
 
