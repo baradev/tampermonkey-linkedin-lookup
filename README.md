@@ -2,13 +2,11 @@
 
 To use this script you need the [Tampermonkey Extension](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo).
 
-## Important info
-
-To run LinkedIn Lookup, you will also need the Trusted-Types Helper script. You can find the link [here](https://greasyfork.org/en/scripts/433051-trusted-types-helper). The Trusted-Types Helper resolves issues with Trusted-Types Chrome Errors.
-
 ## Installation / Update
 
 Open the following [script](https://github.com/kbarushkaa/tampermonkey-linkedin-lookup/raw/main/linkedin-lookup.user.js) and click select _Install_ / _Reinstall_ .
+
+To run LinkedIn Lookup, you will also need a dependency - the Trusted-Types Helper script. You can find the link [here](https://greasyfork.org/en/scripts/433051-trusted-types-helper). The Trusted-Types Helper resolves issues with Trusted-Types Chrome Errors.
 
 ## Usage
 
